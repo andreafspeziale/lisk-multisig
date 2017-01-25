@@ -29,6 +29,13 @@ module.exports = function(grunt){
                 options: {
                     livereload: true
                 }
+            },
+            js: {
+                files: ['./public/**/*.js'],
+                tasks: ['concat'],
+                options: {
+                    livereload: true
+                }
             }
         },
         jade: {
@@ -55,7 +62,16 @@ module.exports = function(grunt){
                     'assets/css/main.css': ['assets/css/*.styl']
                 }
             }
-        }
+        },
+        concat: {
+            options: {
+                separator: ''
+            },
+            angular: {
+                src:  ['./public/*.js', './public/*/*.js', './public/**/*.js'],
+                dest: './assets/js/concat.app.js'
+            }
+        },
     })
-    grunt.registerTask('default', ['wiredep', 'stylus', 'jade', 'watch']);
+    grunt.registerTask('default', ['wiredep', 'stylus', 'jade',  'concat', 'watch']);
 }

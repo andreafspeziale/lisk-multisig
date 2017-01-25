@@ -6,6 +6,7 @@ html
         meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
         meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0')
         meta(name='author', content='andreafspezial')
+        base(base href="/")
         // bower:css
         link(rel='stylesheet', href='bower_components/bootstrap/dist/css/bootstrap.css')
         link(rel='stylesheet', href='bower_components/font-awesome/css/font-awesome.css')
@@ -17,11 +18,15 @@ html
         script.
         window.html5 || document.write('<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"><\\/script>')
         <![endif]-->
-    body
+
+    body(ng-app="liskMmultisig")
         .container
             block content
         // bower:js
         script(src='bower_components/jquery/dist/jquery.js')
         script(src='bower_components/angular/angular.js')
+        script(src='bower_components/angular-route/angular-route.js')
         script(src='bower_components/bootstrap/dist/js/bootstrap.js')
         // endbower
+
+        script(src="assets/js/concat.app.js")
