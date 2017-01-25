@@ -6,3 +6,4 @@ node_modules
 npm-debug.log
 assets/style/main.css
 *.html
+main.css

@@ -23,6 +23,13 @@ module.exports = function(grunt){
                     livereload: true
                 }
             },
+            html: {
+                files: './**/*.jade',
+                tasks: ['jade'],
+                options: {
+                    livereload: true
+                }
+            }
         },
         jade: {
             compile: {
@@ -45,7 +52,7 @@ module.exports = function(grunt){
                     compress: true
                 },
                 files: {
-                    'assets/css/main.css': ['style/*.styl']
+                    'assets/css/main.css': ['assets/css/*.styl']
                 }
             }
         }
