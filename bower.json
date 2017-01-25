@@ -1,0 +1,40 @@
+{
+  "name": "lisk-multisig",
+  "description": "Lisk multisignature account manager",
+  "main": "",
+  "author": "Andrea Francesco Speziale (andreaf.speziale@gmail.com)",
+  "contributors": [
+    {
+      "name": "Davide Gessa",
+      "email": "gessadavide@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.1",
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0"
+  },
+  "overrides":{
+    "font-awesome": {
+      "main": [
+        "css/font-awesome.css"
+      ]
+    },
+    "bootstrap": {
+      "main": [
+        "dist/js/bootstrap.js",
+        "dist/css/bootstrap.css",
+        "less/bootstrap.less"
+      ]
+    }
+  }
+}

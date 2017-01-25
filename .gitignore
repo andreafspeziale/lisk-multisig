@@ -1,0 +1,7 @@
+bower_components/*
+.idea
+node_modules
+.DS_Store
+.tags*
+npm-debug.log
+assets/style/main.css
