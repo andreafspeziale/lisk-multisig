@@ -1,6 +1,31 @@
 extends layout
 block content
-    .container-full-bg
-        .container
-            p.text.claim Login to manage your
-                strong Streaming Resources.
+    .row
+        .spacer-45
+        .col-md-12.text-center
+            p.claim Create and manage your Lisk
+                strong Multisign Accounts
+            p.small A multi-signature account is a shared account where a transaction is valid only if signed by the co-owners account.
+    .spacer-25
+    .row
+        .col-md-8.col-md-offset-2
+            hr
+    .spacer-25
+    .row
+        .form-horizontal.col-md-6.col-md-offset-3
+            .form-group
+                .col-md-12
+                    input.form-control(type="text", name="ip", placeholder="Lisk trusted node IP")
+            .form-group
+                .col-md-12
+                    input.form-control(type="text", name="port", placeholder="Lisk trusted node PORT")
+            .form-group
+                .col-sm-offset-2.col-sm-10
+                    button.btn.custom-button.pull-right(type="text", name="port", placeholder="Lisk trusted node PORT")
+                        | Next
+    .spacer-45
+    .row
+        .col-md-12.text-center
+            p.small * we'll need to communicate with a Lisk trusted node.
+                br
+                | Add your favorite anc continue with the setup.
