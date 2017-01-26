@@ -1,16 +1,21 @@
 #Lisk Multisig Account Manager
+This projects aims to release a light and local Lisk Multi-signature Account manager.
 
-##DevReq
+#Developing
+###DevReq
 
 	node
 	bower
 	grunt
 
-##Install
+###Install
 
 	$ bower install
 	$ npm install
 
-##Develop
+###Develop
 
 	$ grunt
+	
+###Run
+Serve it with a python simple server or whatever and check the result into your browser.
