@@ -30,6 +30,8 @@
     "load-grunt-tasks": "^3.2.0"
   },
   "dependencies": {
+    "body-parser": "^1.16.0",
+    "express": "^4.14.1",
     "liskapi": "^0.1.1"
   }
 }

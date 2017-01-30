@@ -18,4 +18,5 @@ This projects aims to release a light and local Lisk Multi-signature Account man
 	$ grunt
 	
 ###Run
-Serve it with a python simple server or whatever and check the result into your browser.
+
+``` node server.js ```
