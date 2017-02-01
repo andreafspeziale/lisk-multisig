@@ -9,6 +9,10 @@ span(ng-controller="NodeController")
             .form-group
                 .col-md-12
                     input.form-control(type="text", name="port", placeholder="Lisk trusted node PORT" ng-model="nodePort")
+            .checkbox
+                label
+                    input(type="checkbox" ng-model="ssl")
+                | SSL
             .form-group
                 .col-sm-offset-2.col-sm-10
                     button.btn.custom-button.pull-right(type="text", name="port", placeholder="Lisk trusted node PORT", ng-click="saveNode();")
