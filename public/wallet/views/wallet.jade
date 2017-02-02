@@ -1,0 +1,19 @@
+//
+   Created by andreafspeziale on 25/01/17.
+span(ng-controller="WalletController")
+    .row
+        .form-horizontal.col-md-6.col-md-offset-3
+            .form-group
+                .col-md-12
+                    input.form-control(type="text", name="address", placeholder="Your main address" ng-model="yourAddress")
+            .form-group
+                .col-md-12
+                    input.form-control(type="text", name="secret", placeholder="Your main address secret" ng-model="yourSecret")
+            .form-group
+                .col-sm-offset-2.col-sm-10
+                    button.btn.custom-button.pull-right(type="text")
+                        | Next
+    .spacer-45
+    .row
+        .col-md-12.text-center
+            p.small * you'll need to transfer fund to the new multi-sign account in order to create one.

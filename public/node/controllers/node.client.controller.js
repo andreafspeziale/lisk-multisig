@@ -1,13 +1,13 @@
 /**
  * Created by andreafspeziale on 25/01/17.
  */
-node.controller('NodeController', ['$scope', '$http', '$rootScope', 'toastr',
-    ($scope, $http, $rootScope, toastr) => {
+node.controller('NodeController', ['$scope', '$http', '$location', '$rootScope', 'toastr',
+    ($scope, $http, $location, $rootScope, toastr) => {
         $scope.nodeIp = '';
         $scope.nodePort = 8000;
         $scope.ssl = true;
 
-        // toDo this should be fired if the node has never been setted up
+        // toDo this controller/page should be fired if the node has never been setted up
 
         $scope.saveNode = () => {
             if( !($scope.nodeIp == '' || $scope.nodePort == '' )) {
