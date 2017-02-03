@@ -4,7 +4,3 @@
 const mainApplicationModuleName = 'liskMmultisig';
 const mainApplicationModule = angular.module(mainApplicationModuleName, ['ngRoute', 'node', 'wallet']);
 
-mainApplicationModule.config(['$locationProvider', ($locationProvider) => {
-    $locationProvider.hashPrefix('!');
-}]);
-

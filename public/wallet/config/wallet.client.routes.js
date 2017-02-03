@@ -7,6 +7,4 @@ wallet.config(['$routeProvider', '$locationProvider', ($routeProvider, $location
     }).otherwise({
         redirectTo: '/'
     });
-    // use the HTML5 History API
-    $locationProvider.html5Mode(true);
 }])
