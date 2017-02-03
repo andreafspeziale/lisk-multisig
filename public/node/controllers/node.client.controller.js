@@ -23,10 +23,10 @@ node.controller('NodeController', ['$scope', '$http', '$location', '$rootScope',
                 console.log($scope.checked);
 
                 $http.post('/api/config', params)
-                    .then(function (data, status, headers, config) {
+                    .then((data, status, headers, config) => {
                         console.log('success');
                     })
-                    .catch(function (data, status, header, config) {
+                    .catch((data, status, header, config) => {
                         console.log('error', data);
                         console.log('error', status);
 
