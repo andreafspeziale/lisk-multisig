@@ -20,20 +20,15 @@ node.controller('NodeController', ['$scope', '$http', '$location', '$rootScope',
                     ssl: $scope.ssl
                 };
 
-                console.log($scope.checked);
-
-                $http.post('/api/config', params)
-                    .then((data, status, headers, config) => {
-                        console.log('success');
+                $http.post('/api/node', params)
+                    .then((data) => {
+                        $location.path(data.data.redirect);
                     })
-                    .catch((data, status, header, config) => {
-                        console.log('error', data);
-                        console.log('error', status);
-
+                    .catch((err) => {
+                        $location.path("/");
                     });
 
             } else {
-                console.log('Fill the fields');
                 toastr.warning('Fill all the fields', 'Warning');
             }
         }

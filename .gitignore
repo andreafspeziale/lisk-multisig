@@ -8,3 +8,4 @@ assets/style/main.css
 *.html
 main.css
 concat.app.js
+data/config.json

@@ -13,18 +13,65 @@ app.use (express.static('.'));
 const router = express.Router ();
 
 /**
- * Trusted local node configuration for API call
+ * Trusted local node configuration API call
  */
-router.post('/config', (req, res) => {
+router.post('/node', (req, res) => {
 
-	console.log('/config POST');
-	console.log(req.body);
+	// toDo we could check if the requested node is good or not / sync or not
+	console.log('/node POST');
 
-	// toDo check if node is running (check if is in sync?)
-	// toDo save a local json with infos
+	let data = {
+		"node":req.body
+	}
+
+	fs.writeFile('data/config.json', JSON.stringify (data), (err,data) => {
+		if(!err) {
+			res.send({
+				"message":"node configuration ok",
+				"redirect":"/wallet"
+			})
+		} else {
+			res.send({
+				"message":"something wrong saving the data",
+				"redirect":"/"
+			})
+		}
+	});
 
 });
 
+/**
+ * Your wallet
+ */
+router.post('/wallet', (req, res) => {
+
+	console.log('/config POST');
+
+	try {
+		let config = JSON.parse (fs.readFileSync('data/config.json', 'utf8'));
+		config["wallet"] = req.body;
+		fs.writeFile('data/config.json', JSON.stringify (config), (err,data) => {
+			if(!err) {
+				res.send({
+					"message":"wallet configuration ok",
+					"redirect":"/main"
+				})
+			} else {
+				res.send({
+					"message":"something wrong saving the data",
+					"redirect":"/"
+				})
+			}
+		});
+	} catch (err) {
+		// error loading
+		// toDo return redirect to /
+	}
+});
+
+/**
+ * Check configuration API call
+ */
 router.get('/config', (req, res) => {
 
 	console.log("/config GET");
