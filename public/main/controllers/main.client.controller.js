@@ -6,6 +6,17 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
 
         $scope.publicKeys = [''];
 
+        // toDo check fields filled
+
+        $scope.createMultisig = () => {
+            console.log("createMultisig");
+            if( !($scope.txLifeTime == '' || $scope.nodePort == '' )) {
+
+            } else {
+                toastr.warning('Fill all the fields', 'Warning');
+            }
+        }
+
         $scope.createMultisigModal = () => {
             console.log("createMultisigModal");
             $scope.modalInstance = $uibModal.open({
