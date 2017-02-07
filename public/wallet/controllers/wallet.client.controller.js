@@ -6,13 +6,15 @@ wallet.controller('WalletController', ['$scope', '$http', '$location', '$rootSco
 
         $scope.yourAddress = '';
         $scope.yourSecret = '';
+        $scope.yourSecondSecret = '';
 
         $scope.saveWallet = () => {
             if( !($scope.yourAddress == '' || $scope.yourSecret == '' )) {
 
                 let wallet = {
                     "address":$scope.yourAddress,
-                    "secret":$scope.yourSecret
+                    "secret":$scope.yourSecret,
+                    "secondSecret":$scope.yourSecondSecret
                 };
 
                 // valid values

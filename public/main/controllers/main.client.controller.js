@@ -24,6 +24,15 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
                 controller: 'MainController',
                 backdrop: 'static'
             })
+        };
+
+        $scope.signMultisigTxModal = () => {
+            console.log("signMultisigTxModal");
+            $scope.modalInstance = $uibModal.open({
+                templateUrl: '/public/main/views/modals/signMultisigTxModal.html',
+                controller: 'MainController',
+                backdrop: 'static'
+            })
         }
 
         // toDo add dismiss modal

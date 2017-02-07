@@ -10,7 +10,7 @@ span(ng-controller="MainController")
                         p.small
                             | In order to create a Multi-signature Account a brand new account will be created.
                             | This account must be charged with 25 LSK at least to become a Multi-signature Account.
-            a(href="#")
+            span(ng-click="signMultisigTxModal();")
                 .col-md-4.text-center.padding-top-bottom-15
                     .col-md-12
                         i.fa.fa-pencil-square-o(aria-hidden="true")

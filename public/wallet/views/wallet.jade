@@ -10,10 +10,15 @@ span(ng-controller="WalletController")
                 .col-md-12
                     input.form-control(type="text", name="secret", placeholder="Your main address secret" ng-model="yourSecret")
             .form-group
+                .col-md-12
+                    input.form-control(type="text", name="secondSecret", placeholder="Your main address second secret (optional)" ng-model="yourSecondSecret")
+            .form-group
                 .col-sm-offset-2.col-sm-10
                     button.btn.custom-button.pull-right(type="text", ng-click="saveWallet();")
                         | Next
     .spacer-45
     .row
         .col-md-12.text-center
-            p.small * you'll need to transfer fund to the new multi-sign account in order to create one.
+            p.small * you'll need to transfer fund to the new multi-sign account in order to create one.<br>It will be also use for transaction sign of other multi-sign account you already own.
+
+

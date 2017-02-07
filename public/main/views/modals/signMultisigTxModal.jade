@@ -1,0 +1,33 @@
+//
+   Created by andreafspeziale on 07/02/17.
+//
+   Created by andreafspeziale on 06/02/17.
+.modal-header
+    h3.modal-title.text-center
+        | Sign Multi-signature Transaction
+
+.modal-body
+    .row
+        .col-md-12
+            p You are going to sign a transaction
+                strong
+                    |  Multi-signature
+                |  account.
+            //
+                p.small.text-center * you are going to sign it with your main account setted up in the wizard.
+
+        .form-horizontal
+            .col-md-8.col-md-offset-2
+                .spacer-25
+                .form-group
+                    .col-md-12
+                        input.form-control(type="text", name="transactionID", placeholder="Transaction ID" ng-model="transactionID")
+            .col-md-12
+                p.small.text-center * you must know the transaction ID to be signed.
+
+.modal-footer
+    button.btn.btn-primary
+        | Sign
+    button.btn.btn-warning
+        | Discard
+
