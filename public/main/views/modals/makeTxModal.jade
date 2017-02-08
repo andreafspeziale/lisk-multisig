@@ -1,20 +1,20 @@
 //
-   Created by andreafspeziale on 07/02/17.
-
+   Created by andreafspeziale on 08/02/17.
 .modal-header
     h3.modal-title.text-center
-        | Sign Multi-signature Transaction
+        | Make Transaction
 
 .modal-body
     .row
         .col-md-12
-            p You are going to sign a transaction
+            p You are going to make a transaction, you must select a wallet.
+            //
                 strong
                     |  Multi-signature
                 |  account.
             //
                 p.small.text-center * you are going to sign it with your main account setted up in the wizard.
-
+    //
         .form-horizontal
             .col-md-8.col-md-offset-2
                 .spacer-25
@@ -26,7 +26,6 @@
 
 .modal-footer
     button.btn.btn-primary
-        | Sign
+        | Make TX
     button.btn.btn-warning(ng-click="$close();")
         | Discard
-

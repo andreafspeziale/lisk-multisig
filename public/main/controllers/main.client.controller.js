@@ -35,6 +35,24 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
             })
         }
 
+        $scope.makeTxModal = () => {
+            console.log("makeTxModal");
+            $scope.modalInstance = $uibModal.open({
+                templateUrl: '/public/main/views/modals/makeTxModal.html',
+                controller: 'MainController',
+                backdrop: 'static'
+            })
+        }
+
+        $scope.addMultisigModal = () => {
+            console.log("makeTxModal");
+            $scope.modalInstance = $uibModal.open({
+                templateUrl: '/public/main/views/modals/addMultisigModal.html',
+                controller: 'MainController',
+                backdrop: 'static'
+            })
+        }
+
         // toDo add dismiss modal
 
         $scope.addPublicKey = () => {

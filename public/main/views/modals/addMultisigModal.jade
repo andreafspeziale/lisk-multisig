@@ -1,0 +1,32 @@
+//
+   Created by andreafspeziale on 08/02/17.
+.modal-header
+    h3.modal-title.text-center
+        | Add Multi-signature Account
+
+.modal-body
+    .row
+        .col-md-12
+            p If you already have one, you can add it and manage it.
+
+        .form-horizontal
+            .col-md-8.col-md-offset-2
+                .spacer-25
+                .form-group
+                    .col-md-12
+                        input.form-control(type="text", name="multisigSecret", placeholder="Multi-signature secret" ng-model="multisigSecret")
+            .col-md-12
+                p.small.text-center * Multi-signature account secret
+                hr
+            .col-md-8.col-md-offset-2
+                .form-group
+                    .col-md-12
+                        input.form-control(type="text", name="multisigAddress", placeholder="Multi-signature address" ng-model="multisigAddress")
+            .col-md-12
+                p.small.text-center * Multi-signature address
+
+.modal-footer
+    button.btn.btn-primary
+                | Add
+    button.btn.btn-warning(ng-click="$close();")
+        | Discard

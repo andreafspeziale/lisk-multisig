@@ -1,8 +1,8 @@
 span(ng-controller="MainController")
-    .row
-        #functions
+    #functions
+        .row
             span(ng-click="createMultisigModal();")
-                .col-md-4.text-center.padding-top-bottom-15
+                .col-md-6.text-center.padding-top-bottom-15
                     .col-md-12
                         i.fa.fa-user-o(aria-hidden="true")
                         h3
@@ -11,16 +11,25 @@ span(ng-controller="MainController")
                             | In order to create a Multi-signature Account a brand new account will be created.
                             | This account must be charged with 25 LSK at least to become a Multi-signature Account.
             span(ng-click="signMultisigTxModal();")
-                .col-md-4.text-center.padding-top-bottom-15
+                .col-md-6.text-center.padding-top-bottom-15
                     .col-md-12
                         i.fa.fa-pencil-square-o(aria-hidden="true")
                         h3 Sign Transaction
                         p.small
                             | For both Creation and Transaction of/from the Multi-signature Account you need to sign the creation or transaction with your Public Key.
-            a(href="#")
-                .col-md-4.text-center.padding-top-bottom-15
+        .row
+
+            span(ng-click="makeTxModal();")
+                .col-md-6.text-center.padding-top-bottom-15
                     .col-md-12
                         i.fa.fa-money(aria-hidden="true")
                         h3 Make Transaction
                         p.small
                             | Send a Transaction from your Main Account or Multi-signature Account.
+            span(ng-click="addMultisigModal();")
+                .col-md-6.text-center.padding-top-bottom-15
+                    .col-md-12
+                        i.fa.fa-address-card-o(aria-hidden="true")
+                        h3 Add Multi-signature Account
+                        p.small
+                            | If you already have one, you can simply manage it adding it
