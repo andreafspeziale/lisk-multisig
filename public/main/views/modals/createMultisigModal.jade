@@ -34,7 +34,7 @@
                     .col-md-10(ng-repeat="key in publicKeys track by $index")
                         input.form-control.margin-bottom-10(type="text", name="ownerPKey", placeholder="Owner Public Key" ng-model="key")
                     .col-md-2
-                        button.btn.btn-default(ng-click="addPublicKey();")
+                        button.btn.btn-default(ng-click="addPublicKey(key,$index);")
                             i.fa.fa-plus
 
             .col-md-12

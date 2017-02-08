@@ -6,11 +6,14 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
 
         $scope.publicKeys = [''];
 
-        // toDo check fields filled
-
         $scope.createMultisig = () => {
             console.log("createMultisig");
-            if( !($scope.txLifeTime == '' || $scope.nodePort == '' )) {
+            // check fields filled
+            if( !($scope.txLifeTime == '' || ($scope.publicKeys.length && $scope.publicKeys[0] == '') )) {
+
+                // call api that create the multisignature account
+
+
 
             } else {
                 toastr.warning('Fill all the fields', 'Warning');
@@ -18,12 +21,23 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
         }
 
         $scope.createMultisigModal = () => {
-            console.log("createMultisigModal");
-            $scope.modalInstance = $uibModal.open({
-                templateUrl: '/public/main/views/modals/createMultisigModal.html',
-                controller: 'MainController',
-                backdrop: 'static'
-            })
+            $http.get ('/api/mnemonic')
+                .then ((data) => {
+                    console.log("createMultisigModal");
+                    $scope.mnemonic = data.data.secret;
+                    console.log($scope.mnemonic);
+
+                    // toDo print mnemonic psw in the modal
+
+                    $scope.modalInstance = $uibModal.open({
+                        templateUrl: '/public/main/views/modals/createMultisigModal.html',
+                        controller: 'MainController',
+                        backdrop: 'static'
+                    })
+                })
+                .catch((err) => {
+                    console.log("Error ", err);
+                });
         };
 
         $scope.signMultisigTxModal = () => {
@@ -53,10 +67,12 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
             })
         }
 
-        // toDo add dismiss modal
+        $scope.addPublicKey = (key, index) => {
 
-        $scope.addPublicKey = () => {
-            $scope.publicKeys.push('');
+            // toDo manage public key array
+
+            console.log(key);
+            console.log(index);
         }
 
     }]);

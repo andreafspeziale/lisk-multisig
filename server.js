@@ -4,6 +4,7 @@ const express 		= require ('express');
 const lisk 			= require ('liskapi');
 const bodyParser 	= require('body-parser');
 const fs = require('fs');
+const Mnemonic = require('bitcore-mnemonic');
 
 const app = express ();
 
@@ -41,7 +42,7 @@ router.post('/node', (req, res) => {
 });
 
 /**
- * Your wallet
+ * Your personal wallet
  */
 router.post('/wallet', (req, res) => {
 
@@ -114,6 +115,28 @@ router.get('/config', (req, res) => {
 		})
 	}
 });
+
+/**
+ * Create Multi-signature account API call
+ */
+
+router.post('/multisig', (req, res) => {
+	console.log('/multisig POST');
+})
+
+/**
+ * Generate mnemonic pass API call
+ */
+
+router.get('/mnemonic', (req, res) => {
+
+	console.log("/mnemonic GET");
+
+	res.send({
+		"secret":new Mnemonic(Mnemonic.Words.ENGLISH).toString(),
+	})
+
+})
 
 app.use ('/api', router);
 
