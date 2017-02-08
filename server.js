@@ -88,6 +88,9 @@ router.get('/config', (req, res) => {
 			// wallet is filled?
 			if(config.wallet) {
 				// wallet filled
+
+				// toDo create here the liskapi instance?
+
 				res.send({
 					"message":"node and wallet have been configured",
 					"redirect":"/main"
