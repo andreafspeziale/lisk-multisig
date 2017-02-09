@@ -4,23 +4,28 @@
 main.controller('MainController', ['$scope', '$http', '$location', '$rootScope', 'toastr', '$uibModal',
     ($scope, $http, $location, $rootScope, toastr, $uibModal) => {
 
-        $scope.publicKeys = [''];
+        $scope.keys = [''];
         $scope.txLifeTime = '';
+        $scope.publicKeys = [];
 
         $scope.createMultisig = () => {
             console.log("createMultisig");
 
             // check fields filled
-            if( $scope.txLifeTime == '' || $scope.publicKeys.indexOf('') == 0) {
+            if( $scope.txLifeTime == '' || $scope.keys.indexOf('') == 0 || $scope.minSig < 2 || $scope.minSig > $scope.keys.length) {
 
                 toastr.warning('Fill all the fields', 'Warning');
 
             } else {
 
+                for(var key in $scope.keys)
+                    $scope.publicKeys.push('+' + $scope.keys[key])
+
                 // toDo creation api call
                 let params = {
                     "secret":$scope.mnemonic,
                     "lifetime":$scope.txLifeTime,
+                    "min":$scope.minSig,
                     "publicKeys":$scope.publicKeys
                 };
 
@@ -82,7 +87,7 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
         }
 
         $scope.addPublicKey = () => {
-            $scope.publicKeys.push('');
+            $scope.keys.push('');
         }
 
     }]);

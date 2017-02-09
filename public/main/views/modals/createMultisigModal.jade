@@ -31,8 +31,15 @@
                 hr
             .col-md-8.col-md-offset-2
                 .form-group
-                    .col-md-10(ng-repeat="key in publicKeys track by $index")
-                        input.form-control.margin-bottom-10(type="text", name="ownerPKey", placeholder="Owner Public Key" ng-model="publicKeys[$index]")
+                    .col-md-12
+                        input.form-control(type="text", name="minSig", placeholder="2" ng-model="minSig")
+            .col-md-12
+                p.small.text-center * Min signatures needed for TX validation
+                hr
+            .col-md-8.col-md-offset-2
+                .form-group
+                    .col-md-10(ng-repeat="key in keys track by $index")
+                        input.form-control.margin-bottom-10(type="text", name="ownerPKey", placeholder="Owner Public Key" ng-model="keys[$index]")
                     .col-md-2
                         button.btn.btn-default(ng-click="addPublicKey();")
                             i.fa.fa-plus
