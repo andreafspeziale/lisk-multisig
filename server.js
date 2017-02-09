@@ -122,6 +122,12 @@ router.get('/config', (req, res) => {
 
 router.post('/multisig', (req, res) => {
 	console.log('/multisig POST');
+	console.log(req.body);
+
+	// toDo create a new wallet with the secret
+	// toDo make a tx from the main accout to the created one
+	// toDo first account became multi-signature
+
 })
 
 /**

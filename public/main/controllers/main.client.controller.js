@@ -5,18 +5,33 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
     ($scope, $http, $location, $rootScope, toastr, $uibModal) => {
 
         $scope.publicKeys = [''];
+        $scope.txLifeTime = '';
 
         $scope.createMultisig = () => {
             console.log("createMultisig");
+
             // check fields filled
-            if( !($scope.txLifeTime == '' || ($scope.publicKeys.length && $scope.publicKeys[0] == '') )) {
+            if( $scope.txLifeTime == '' || $scope.publicKeys.indexOf('') == 0) {
 
-                // call api that create the multisignature account
-
-
+                toastr.warning('Fill all the fields', 'Warning');
 
             } else {
-                toastr.warning('Fill all the fields', 'Warning');
+
+                // toDo creation api call
+                let params = {
+                    "secret":$scope.mnemonic,
+                    "lifetime":$scope.txLifeTime,
+                    "publicKeys":$scope.publicKeys
+                };
+
+                $http.post('/api/multisig', params)
+                    .then((data) => {
+                        // response
+                    })
+                    .catch((err) => {
+                        // error
+                    });
+
             }
         }
 
@@ -25,9 +40,7 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
                 .then ((data) => {
                     console.log("createMultisigModal");
                     $scope.mnemonic = data.data.secret;
-                    console.log($scope.mnemonic);
 
-                    // toDo print mnemonic psw in the modal
 
                     $scope.modalInstance = $uibModal.open({
                         templateUrl: '/public/main/views/modals/createMultisigModal.html',
@@ -69,9 +82,6 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
         }
 
         $scope.addPublicKey = () => {
-
-            // toDo manage public key array
-
             $scope.publicKeys.push('');
         }
 

@@ -33,7 +33,6 @@
                 .form-group
                     .col-md-10(ng-repeat="key in publicKeys track by $index")
                         input.form-control.margin-bottom-10(type="text", name="ownerPKey", placeholder="Owner Public Key" ng-model="publicKeys[$index]")
-                        p {{ publicKeys }}
                     .col-md-2
                         button.btn.btn-default(ng-click="addPublicKey();")
                             i.fa.fa-plus
@@ -42,7 +41,7 @@
                 p.small.text-center * Public Keys address Co-owners
 
 .modal-footer
-    button.btn.btn-primary
+    button.btn.btn-primary(ng-click="createMultisig();")
         | Create
     button.btn.btn-warning(ng-click="$close();")
         | Discard
