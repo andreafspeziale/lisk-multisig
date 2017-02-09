@@ -32,7 +32,8 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
                     $scope.modalInstance = $uibModal.open({
                         templateUrl: '/public/main/views/modals/createMultisigModal.html',
                         controller: 'MainController',
-                        backdrop: 'static'
+                        backdrop: 'static',
+                        scope: $scope
                     })
                 })
                 .catch((err) => {
@@ -67,12 +68,11 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
             })
         }
 
-        $scope.addPublicKey = (key, index) => {
+        $scope.addPublicKey = () => {
 
             // toDo manage public key array
 
-            console.log(key);
-            console.log(index);
+            $scope.publicKeys.push('');
         }
 
     }]);
