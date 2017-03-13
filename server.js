@@ -259,10 +259,16 @@ router.post('/sign', (req, res) => {
 
 			let lisk = require ('liskapi')(config.node);
 
+			let params = {
+				"secret":config[req.body.wallet].secret,
+				"transactionId":req.body.transactionID
+			};
+
+			if(config[req.body.wallet].secondSecret != "")
+				params[secondSecret] = config[req.body.wallet].secondSecret;
+
 			lisk.signTransaction ()
-				.data ( { secret: config[req.body.wallet].secret,
-					transactionId: req.body.transactionID
-				} )
+				.data ( params )
 				.call ()
 				.then ((res) => {
 					console.log (`Post for signing a multi-sig creation txID\n ${JSON.stringify (res)}`);

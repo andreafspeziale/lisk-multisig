@@ -17,7 +17,6 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
             // ToDo select a wallet and sign passing which wallet
 
             if($scope.wallet != '' && $scope.transactionID != '') {
-                console.log('ok');
 
                 let params = {
                     "wallet":$scope.wallet,
