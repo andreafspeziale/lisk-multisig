@@ -12,7 +12,7 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
             console.log("createMultisig");
 
             // check fields filled
-            if( $scope.txLifeTime == '' || $scope.keys.indexOf('') == 0 || $scope.minSig < 2 || $scope.minSig > $scope.keys.length) {
+            if( $scope.name == '' || $scope.txLifeTime == '' || $scope.keys.indexOf('') == 0 || $scope.minSig < 2 || $scope.minSig > $scope.keys.length) {
 
                 toastr.warning('Fill all the fields', 'Warning');
 
@@ -21,16 +21,19 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
                 for(var key in $scope.keys)
                     $scope.publicKeys.push('+' + $scope.keys[key])
 
-                // toDo creation api call
                 let params = {
-                    "secret":$scope.mnemonic,
-                    "lifetime":$scope.txLifeTime,
-                    "min":$scope.minSig,
-                    "publicKeys":$scope.publicKeys
+                        "name":$scope.name,
+                        "wallet": {
+                            "secret":$scope.mnemonic,
+                            "lifetime":$scope.txLifeTime,
+                            "min":$scope.minSig,
+                            "publicKeys":$scope.publicKeys
+                        }
                 };
 
                 $http.post('/api/multisig', params)
                     .then((data) => {
+                        // toDo creation api call
                         // response
                     })
                     .catch((err) => {

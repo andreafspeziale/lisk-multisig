@@ -1,7 +1,5 @@
 "use strict";
-
 const express 		= require ('express');
-const lisk 			= require ('liskapi');
 const bodyParser 	= require('body-parser');
 const fs = require('fs');
 const Mnemonic = require('bitcore-mnemonic');
@@ -89,9 +87,6 @@ router.get('/config', (req, res) => {
 			// wallet is filled?
 			if(config.wallet) {
 				// wallet filled
-
-				// toDo create here the liskapi instance?
-
 				res.send({
 					"message":"node and wallet have been configured",
 					"redirect":"/main"
@@ -122,12 +117,37 @@ router.get('/config', (req, res) => {
 
 router.post('/multisig', (req, res) => {
 	console.log('/multisig POST');
-	console.log(req.body);
+	console.log(req.body.name);
+	console.log(req.body.wallet);
 
-	// toDo create a new wallet with the secret
-	// toDo make a tx from the main accout to the created one
+	// toDo create a new wallet with the given secret
+	// toDo make a tx from the main account to the created one
 	// toDo first account became multi-signature
 
+	// if node setted
+	try {
+
+		let config = JSON.parse (fs.readFileSync('data/config.json', 'utf8'));
+
+		if(config.node) {
+
+			const lisk = require ('liskapi')(config.node);
+
+			lisk.getSyncStatus ().call ()
+				.then ((res) => {
+					console.log (`Get sync status data\n ${JSON.stringify (res)}`);
+				})
+				.catch ((err) => {
+					console.log ('Got an error', err);
+				});
+		}
+
+	} catch (err) {
+		res.send({
+			"message":"no configuration found",
+			"redirect":"/node"
+		})
+	}
 })
 
 /**
