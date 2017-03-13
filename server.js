@@ -117,8 +117,6 @@ router.get('/config', (req, res) => {
 
 router.post('/multisig', (req, res) => {
 	console.log('/multisig POST');
-	console.log(req.body.name);
-	console.log(req.body.wallet);
 
 	// toDo create a new wallet with the given secret
 	// toDo make a tx from the main account to the created one
@@ -129,17 +127,95 @@ router.post('/multisig', (req, res) => {
 
 		let config = JSON.parse (fs.readFileSync('data/config.json', 'utf8'));
 
-		if(config.node) {
+		if(config.node && !(req.body.name in config)) {
 
 			const lisk = require ('liskapi')(config.node);
 
-			lisk.getSyncStatus ().call ()
-				.then ((res) => {
-					console.log (`Get sync status data\n ${JSON.stringify (res)}`);
+			lisk.openAccount ()
+				.data ( { secret: req.body.wallet.secret } )
+				.call ()
+				.then ((r) => {
+					console.log (`Post for opening an account\n ${JSON.stringify (r)}`);
+					let account = r.account.address;
+					let params = {
+						secret: config.wallet.secret,
+						amount: 3000000000,
+						recipientId: account,
+						publicKey: config.wallet.publickey
+					};
+					if(config.wallet.secondSecret != "")
+						params[secondSecret] = config.wallet.secondSecret;
+
+					// create the multisig-one
+					setTimeout(function () {
+						lisk.sendTransaction ()
+							.data (params)
+							.call ()
+							.then ((r2) => {
+								console.log (`Put for sending LSK\n ${JSON.stringify (r2)}`);
+								setTimeout(function () {
+									lisk.createMultiSignatureAccount ()
+										.data ( { secret: req.body.wallet.secret,
+											lifetime: req.body.wallet.lifetime,
+											min: parseInt(req.body.wallet.min),
+											keysgroup: req.body.wallet.publicKeys
+										} )
+										.call ()
+										.then ((r3) => {
+											console.log (`Put for creating a multi-sig account\n ${JSON.stringify (r3)}`);
+
+											// if everything is ok save the wallet data
+											config[req.body.name] = req.body.wallet;
+											fs.writeFile('data/config.json', JSON.stringify (config), (err,data) => {
+												if(!err) {
+													res.send({
+														"message":"Multi-signature account created",
+														"redirect":"/main",
+			 											"type":"success"
+													})
+												} else {
+													res.send({
+														"message":"Something wrong saving the Multi-signature account data",
+														"redirect":"/",
+														"type":"error"
+													})
+												}
+											});
+										})
+										.catch ((err) => {
+											console.log ('Got an error creating a multi-sig account\n', err);
+											res.send({
+												"message":"Something wrong creating a multi-sig account, " + err,
+												"redirect":"/main",
+												"type":"error"
+											})
+										});
+								}, 30000);
+							})
+							.catch ((err) => {
+								console.log ('Got an error sending LSK\n', err);
+								res.send({
+									"message":"Something wrong sending LSK, " + err,
+									"redirect":"/main",
+									"type":"error"
+								})
+							});
+					}, 30000);
 				})
 				.catch ((err) => {
-					console.log ('Got an error', err);
+					console.log ('Got an error opening an account\n', err);
+					res.send({
+						"message":"Something wrong opening an account, " + err,
+						"redirect":"/main",
+						"type":"error"
+					})
 				});
+		} else {
+			res.send({
+				"message":"Wallet already exists",
+				"redirect":"/main",
+				"type":"error"
+			})
 		}
 
 	} catch (err) {

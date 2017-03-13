@@ -1,9 +1,10 @@
 /**
  * Created by andreafspeziale on 03/02/17.
  */
-main.controller('MainController', ['$scope', '$http', '$location', '$rootScope', 'toastr', '$uibModal',
-    ($scope, $http, $location, $rootScope, toastr, $uibModal) => {
+main.controller('MainController', ['$scope', '$http', '$location', '$rootScope', 'toastr', '$uibModal','usSpinnerService',
+    ($scope, $http, $location, $rootScope, toastr, $uibModal, usSpinnerService) => {
 
+        $rootScope.waiting = false;
         $scope.keys = [''];
         $scope.txLifeTime = '';
         $scope.publicKeys = [];
@@ -12,7 +13,7 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
             console.log("createMultisig");
 
             // check fields filled
-            if( $scope.name == '' || $scope.txLifeTime == '' || $scope.keys.indexOf('') == 0 || $scope.minSig < 2 || $scope.minSig > $scope.keys.length) {
+            if( $scope.name == '' || $scope.txLifeTime <= 0 || $scope.keys.indexOf('') == 0 || $scope.minSig < 2 || $scope.minSig > $scope.keys.length) {
 
                 toastr.warning('Fill all the fields', 'Warning');
 
@@ -31,13 +32,25 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
                         }
                 };
 
+                $rootScope.waiting = true;
+                usSpinnerService.spin('spinner-1')
+                $scope.modalInstance.close();
+
                 $http.post('/api/multisig', params)
                     .then((data) => {
-                        // toDo creation api call
-                        // response
+
+                        usSpinnerService.stop('spinner-1')
+                        $rootScope.waiting = false;
+
+                        if(data.data.type == 'error')
+                            toastr.error(data.data.message, 'Error');
+                        else
+                            toastr.success(data.data.message, 'Success');
+
                     })
                     .catch((err) => {
-                        // error
+                        console.log('error')
+                        console.log(err)
                     });
 
             }

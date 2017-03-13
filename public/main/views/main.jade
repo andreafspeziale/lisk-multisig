@@ -1,4 +1,6 @@
 span(ng-controller="MainController")
+    #overlay(ng-show="waiting")
+    span(us-spinner, spinner-key="spinner-1")
     #functions
         .row
             span(ng-click="createMultisigModal();")

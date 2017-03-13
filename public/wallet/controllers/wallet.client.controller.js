@@ -4,6 +4,7 @@
 wallet.controller('WalletController', ['$scope', '$http', '$location', '$rootScope', 'toastr',
     ($scope, $http, $location, $rootScope, toastr) => {
 
+        $scope.yourPublicKey = '';
         $scope.yourAddress = '';
         $scope.yourSecret = '';
         $scope.yourSecondSecret = '';
@@ -14,7 +15,8 @@ wallet.controller('WalletController', ['$scope', '$http', '$location', '$rootSco
                 let wallet = {
                     "address":$scope.yourAddress,
                     "secret":$scope.yourSecret,
-                    "secondSecret":$scope.yourSecondSecret
+                    "secondSecret":$scope.yourSecondSecret,
+                    "publickey":$scope.yourPublicKey
                 };
 
                 // valid values
