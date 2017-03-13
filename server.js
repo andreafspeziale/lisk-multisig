@@ -101,6 +101,8 @@ router.get('/config', (req, res) => {
 
 	console.log("/config GET");
 
+	// ToDo test it
+
 	// the app has a config?
 	try {
 		// yes
@@ -144,7 +146,7 @@ router.get('/config', (req, res) => {
 router.post('/multisig', (req, res) => {
 	console.log('/multisig POST');
 
-	try {
+	// try {
 
 		let config = JSON.parse (fs.readFileSync('data/config.json', 'utf8'));
 
@@ -165,7 +167,7 @@ router.post('/multisig', (req, res) => {
 						publicKey: config.wallet.publickey
 					};
 					if(config.wallet.secondSecret != "")
-						params[secondSecret] = config.wallet.secondSecret;
+						params.secondSecret = config.wallet.secondSecret;
 
 					// create the multisig-one
 					setTimeout(function () {
@@ -239,19 +241,19 @@ router.post('/multisig', (req, res) => {
 			})
 		}
 
-	} catch (err) {
-		res.send({
-			"message":"no configuration found",
-			"redirect":"/node"
-		})
-	}
+	// } catch (err) {
+	// 	res.send({
+	// 		"message":"no configuration found",
+	// 		"redirect":"/node"
+	// 	})
+	// }
 })
 
 /**
  * Sign tx API call
  */
 router.post('/sign', (req, res) => {
-	try {
+	// try {
 
 		let config = JSON.parse(fs.readFileSync('data/config.json', 'utf8'));
 
@@ -260,12 +262,12 @@ router.post('/sign', (req, res) => {
 			let lisk = require ('liskapi')(config.node);
 
 			let params = {
-				"secret":config[req.body.wallet].secret,
-				"transactionId":req.body.transactionID
+				secret:config[req.body.wallet].secret,
+				// publicKey:config[req.body.wallet].publickey,
+				transactionId:req.body.transactionID
 			};
 
-			if(config[req.body.wallet].secondSecret != "")
-				params[secondSecret] = config[req.body.wallet].secondSecret;
+			// if(config[req.body.wallet].secondSecret != "") params.secondSecret = config[req.body.wallet].secondSecret;
 
 			lisk.signTransaction ()
 				.data ( params )
@@ -287,13 +289,12 @@ router.post('/sign', (req, res) => {
 					})
 				});
 		}
-
-	} catch (err) {
-		res.send({
-			"message": "No configuration found",
-			"redirect": "/node"
-		})
-	}
+	// } catch (err) {
+	// 	res.send({
+	// 		"message": "No configuration found",
+	// 		"redirect": "/node"
+	// 	})
+	// }
 })
 
 /**
