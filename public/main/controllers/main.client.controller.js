@@ -24,11 +24,15 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
                     "transactionID":$scope.transactionID
                 };
 
+                usSpinnerService.spin('spinner-1');
+                $rootScope.waiting = true;
+                $scope.modalInstance.close();
+
                 $http.post('/api/sign', params)
                      .then((data) => {
 
-                     // usSpinnerService.stop('spinner-1');
-                     // $rootScope.waiting = false;
+                     usSpinnerService.stop('spinner-1');
+                     $rootScope.waiting = false;
 
                      if(data.data.type == 'error')
                         toastr.error(data.data.message, 'Error');

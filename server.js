@@ -150,7 +150,7 @@ router.post('/multisig', (req, res) => {
 
 		if(config.node && !(req.body.name in config)) {
 
-			const lisk = require ('liskapi')(config.node);
+			let lisk = require ('liskapi')(config.node);
 
 			lisk.openAccount ()
 				.data ( { secret: req.body.wallet.secret } )
@@ -256,7 +256,30 @@ router.post('/sign', (req, res) => {
 		let config = JSON.parse(fs.readFileSync('data/config.json', 'utf8'));
 
 		if (config.node && req.body.wallet in config) {
-			console.log("OK WE HAVE THE WALLET");
+
+			let lisk = require ('liskapi')(config.node);
+
+			lisk.signTransaction ()
+				.data ( { secret: config[req.body.wallet].secret,
+					transactionId: req.body.transactionID
+				} )
+				.call ()
+				.then ((res) => {
+					console.log (`Post for signing a multi-sig creation txID\n ${JSON.stringify (res)}`);
+					res.send({
+						"message":"Transaction signed",
+						"redirect":"/main",
+						"type":"success"
+					})
+				})
+				.catch ((err) => {
+					console.log ('Got an error signing a multi-sig creation txID\n', err);
+					res.send({
+						"message":"Got an error signing a multi-sig creation txID, " + err,
+						"redirect":"/main",
+						"type":"error"
+					})
+				});
 		}
 
 	} catch (err) {
