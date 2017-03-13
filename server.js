@@ -68,6 +68,10 @@ router.post('/wallet', (req, res) => {
 	}
 });
 
+
+/**
+ * Get all wallets API call
+ */
 router.get('/wallets', (req, res) => {
 	try {
 		// yes
@@ -140,11 +144,6 @@ router.get('/config', (req, res) => {
 router.post('/multisig', (req, res) => {
 	console.log('/multisig POST');
 
-	// toDo create a new wallet with the given secret
-	// toDo make a tx from the main account to the created one
-	// toDo first account became multi-signature
-
-	// if node setted
 	try {
 
 		let config = JSON.parse (fs.readFileSync('data/config.json', 'utf8'));
@@ -244,6 +243,26 @@ router.post('/multisig', (req, res) => {
 		res.send({
 			"message":"no configuration found",
 			"redirect":"/node"
+		})
+	}
+})
+
+/**
+ * Sign tx API call
+ */
+router.post('/sign', (req, res) => {
+	try {
+
+		let config = JSON.parse(fs.readFileSync('data/config.json', 'utf8'));
+
+		if (config.node && req.body.wallet in config) {
+			console.log("OK WE HAVE THE WALLET");
+		}
+
+	} catch (err) {
+		res.send({
+			"message": "No configuration found",
+			"redirect": "/node"
 		})
 	}
 })

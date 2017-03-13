@@ -18,26 +18,31 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
 
             if($scope.wallet != '' && $scope.transactionID != '') {
                 console.log('ok');
+
+                let params = {
+                    "wallet":$scope.wallet,
+                    "transactionID":$scope.transactionID
+                };
+
+                $http.post('/api/sign', params)
+                     .then((data) => {
+
+                     // usSpinnerService.stop('spinner-1');
+                     // $rootScope.waiting = false;
+
+                     if(data.data.type == 'error')
+                        toastr.error(data.data.message, 'Error');
+                     else
+                        toastr.success(data.data.message, 'Success');
+                 })
+                 .catch((err) => {
+                     console.log('error');
+                     console.log(err);
+                 });
+
             } else {
                 toastr.warning('Fill all the fields', 'Warning');
             }
-
-            /*$http.post('/api/sign', params)
-                .then((data) => {
-
-                    usSpinnerService.stop('spinner-1')
-                    $rootScope.waiting = false;
-
-                    if(data.data.type == 'error')
-                        toastr.error(data.data.message, 'Error');
-                    else
-                        toastr.success(data.data.message, 'Success');
-
-                })
-                .catch((err) => {
-                    console.log('error')
-                    console.log(err)
-                });*/
         };
 
         $scope.createMultisig = () => {
