@@ -8,6 +8,37 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
         $scope.keys = [''];
         $scope.txLifeTime = '';
         $scope.publicKeys = [];
+        $scope.wallet = '';
+        $scope.transactionID = '';
+
+
+        $scope.signMultisigTx = () => {
+
+            // ToDo select a wallet and sign passing which wallet
+
+            if($scope.wallet != '' && $scope.transactionID != '') {
+                console.log('ok');
+            } else {
+                toastr.warning('Fill all the fields', 'Warning');
+            }
+
+            /*$http.post('/api/sign', params)
+                .then((data) => {
+
+                    usSpinnerService.stop('spinner-1')
+                    $rootScope.waiting = false;
+
+                    if(data.data.type == 'error')
+                        toastr.error(data.data.message, 'Error');
+                    else
+                        toastr.success(data.data.message, 'Success');
+
+                })
+                .catch((err) => {
+                    console.log('error')
+                    console.log(err)
+                });*/
+        };
 
         $scope.createMultisig = () => {
             console.log("createMultisig");
@@ -77,11 +108,24 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
 
         $scope.signMultisigTxModal = () => {
             console.log("signMultisigTxModal");
-            $scope.modalInstance = $uibModal.open({
-                templateUrl: '/public/main/views/modals/signMultisigTxModal.html',
-                controller: 'MainController',
-                backdrop: 'static'
-            })
+
+            // get all the wallets wallet
+            $http.get ('/api/wallets')
+                .then ((data) => {
+                    console.log("signTxModal");
+
+                    $scope.wallets = data.data.data;
+
+                    $scope.modalInstance = $uibModal.open({
+                        templateUrl: '/public/main/views/modals/signMultisigTxModal.html',
+                        controller: 'MainController',
+                        backdrop: 'static',
+                        scope: $scope
+                    })
+                })
+                .catch((err) => {
+                    console.log("Error ", err);
+                });
         }
 
         $scope.makeTxModal = () => {

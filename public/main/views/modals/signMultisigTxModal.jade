@@ -20,12 +20,22 @@
                 .spacer-25
                 .form-group
                     .col-md-12
+                        select.form-control(ng-model="wallet")
+                            option(ng-repeat="wallet in wallets", value="{{ wallet }}") {{ wallet }}
+
+            .col-md-12
+                p.small.text-center * this name will help you to recognize your wallets
+                hr
+            .col-md-8.col-md-offset-2
+                .spacer-25
+                .form-group
+                    .col-md-12
                         input.form-control(type="text", name="transactionID", placeholder="Transaction ID" ng-model="transactionID")
             .col-md-12
                 p.small.text-center * you must know the transaction ID to be signed.
 
 .modal-footer
-    button.btn.btn-primary
+    button.btn.btn-primary(ng-click="signMultisigTx();")
         | Sign
     button.btn.btn-warning(ng-click="$close();")
         | Discard

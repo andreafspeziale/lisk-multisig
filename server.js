@@ -68,6 +68,28 @@ router.post('/wallet', (req, res) => {
 	}
 });
 
+router.get('/wallets', (req, res) => {
+	try {
+		// yes
+		let config = JSON.parse (fs.readFileSync('data/config.json', 'utf8'));
+		let wallets = [];
+
+		for (let element in config)
+			if(element != "node")
+				wallets.push(element);
+
+		res.send({
+			"message":"Get all wallets",
+			"data":wallets
+		})
+	} catch (err) {
+		res.send({
+			"message":"no configuration found",
+			"redirect":"/node"
+		})
+	}
+})
+
 /**
  * Check configuration API call
  */
