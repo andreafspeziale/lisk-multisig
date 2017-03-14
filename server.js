@@ -272,8 +272,8 @@ router.post('/sign', (req, res) => {
 			lisk.signTransaction ()
 				.data ( params )
 				.call ()
-				.then ((res) => {
-					console.log (`Post for signing a multi-sig creation txID\n ${JSON.stringify (res)}`);
+				.then ((r) => {
+					console.log (`Post for signing a multi-sig creation txID\n ${JSON.stringify (r)}`);
 					res.send({
 						"message":"Transaction signed",
 						"redirect":"/main",
