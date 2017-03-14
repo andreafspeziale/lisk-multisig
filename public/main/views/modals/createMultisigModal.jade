@@ -6,6 +6,8 @@
 
 .modal-body
     .row
+        //
+            ToDo choose a wallet to be charged
         .col-md-12
             p You are going to create a new wallet that will be use as a
                 strong
@@ -35,14 +37,14 @@
                     .col-md-12
                         input.form-control(type="number", name="txLifeTime", placeholder="24" ng-model="txLifeTime")
             .col-md-12
-                p.small.text-center * Transactions expired time, in hours (e.g 24 --> 24hrs)
+                p.small.text-center * transactions expired time, in hours (e.g 24 --> 24hrs)
                 hr
             .col-md-8.col-md-offset-2
                 .form-group
                     .col-md-12
                         input.form-control(type="text", name="minSig", placeholder="2" ng-model="minSig")
             .col-md-12
-                p.small.text-center * Min signatures needed for TX validation
+                p.small.text-center * min signatures needed for TX validation
                 hr
             .col-md-8.col-md-offset-2
                 .form-group
@@ -53,7 +55,7 @@
                             i.fa.fa-plus
 
             .col-md-12
-                p.small.text-center * Public Keys address Co-owners
+                p.small.text-center * public keys address co-owners
 
 .modal-footer
     button.btn.btn-primary(ng-click="createMultisig();")

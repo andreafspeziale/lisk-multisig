@@ -7,7 +7,32 @@
 .modal-body
     .row
         .col-md-12
-            p You are going to make a transaction, you must select a wallet.
+            p You are going to make a transaction, you must select one of your account.
+        .form-horizontal
+            .col-md-8.col-md-offset-2
+                .spacer-25
+                .form-group
+                    .col-md-12
+                        select.form-control(ng-model="wallet")
+                            option(ng-repeat="wallet in wallets", value="{{ wallet }}") {{ wallet }}
+
+            .col-md-12
+                p.small.text-center * select one of your accounts
+                hr
+            .col-md-8.col-md-offset-2
+                .form-group
+                    .col-md-12
+                        input.form-control(type="text", name="txAmount", placeholder="e.g 20" ng-model="txAmount")
+            .col-md-12
+                p.small.text-center * amount of the transaction
+                hr
+            .col-md-8.col-md-offset-2
+                .form-group
+                    .col-md-12
+                        input.form-control(type="text", name="txRecipient", placeholder="Recipient address" ng-model="txRecipient")
+            .col-md-12
+                p.small.text-center * recipient of the transaction
+                hr
             //
                 strong
                     |  Multi-signature

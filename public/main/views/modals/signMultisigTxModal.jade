@@ -12,8 +12,6 @@
                 strong
                     |  Multi-signature
                 |  account.
-            //
-                p.small.text-center * you are going to sign it with your main account setted up in the wizard.
 
         .form-horizontal
             .col-md-8.col-md-offset-2
@@ -24,7 +22,7 @@
                             option(ng-repeat="wallet in wallets", value="{{ wallet }}") {{ wallet }}
 
             .col-md-12
-                p.small.text-center * this name will help you to recognize your wallets
+                p.small.text-center * select one of your accounts
                 hr
             .col-md-8.col-md-offset-2
                 .spacer-25

@@ -166,17 +166,30 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
 
         $scope.makeTxModal = () => {
             console.log("makeTxModal");
-            $scope.modalInstance = $uibModal.open({
-                templateUrl: '/public/main/views/modals/makeTxModal.html',
-                controller: 'MainController',
-                backdrop: 'static'
-            })
+
+            $http.get ('/api/wallets')
+                .then ((data) => {
+
+                    $scope.wallets = data.data.data;
+
+                    $scope.modalInstance = $uibModal.open({
+                        templateUrl: '/public/main/views/modals/makeTxModal.html',
+                        controller: 'MainController',
+                        backdrop: 'static',
+                        scope: $scope
+                    })
+                })
+                .catch((err) => {
+                    console.log("Error ", err);
+                });
+
+
         }
 
-        $scope.addMultisigModal = () => {
+        $scope.addAccountModal = () => {
             console.log("makeTxModal");
             $scope.modalInstance = $uibModal.open({
-                templateUrl: '/public/main/views/modals/addMultisigModal.html',
+                templateUrl: '/public/main/views/modals/addAccountModal.html',
                 controller: 'MainController',
                 backdrop: 'static'
             })
