@@ -10,11 +10,39 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
         $scope.publicKeys = [];
         $scope.wallet = '';
         $scope.transactionID = '';
+        $scope.accountName = '';
+        $scope.accountSecret = '';
+        $scope.accountAddress = '';
+
+        $scope.addWallet = () => {
+            console.log("addWallet")
+            if($scope.accountName == "" || $scope.accountSecret == "" || $scope.accountAddress == "")
+                toastr.warning('Fill all the fields', 'Warning');
+            else {
+                let data = {
+                    name:$scope.accountName,
+                    address:$scope.accountAddress,
+                    secret:$scope.accountSecret
+                };
+                $http.post('/api/add', data)
+                    .then((data) => {
+                        $scope.modalInstance.close();
+                        if(data.data.type == 'error')
+                            toastr.error(data.data.message, 'Error');
+                        else
+                            toastr.success(data.data.message, 'Success');
+
+                    })
+                    .catch((err) => {
+                        console.log('error');
+                        console.log(err);
+                    });
+            }
+
+        }
 
 
         $scope.signMultisigTx = () => {
-
-            // ToDo select a wallet and sign passing which wallet
 
             if($scope.wallet != '' && $scope.transactionID != '') {
 

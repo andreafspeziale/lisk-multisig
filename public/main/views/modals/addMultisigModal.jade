@@ -2,31 +2,39 @@
    Created by andreafspeziale on 08/02/17.
 .modal-header
     h3.modal-title.text-center
-        | Add Multi-signature Account
+        | Add Account
 
 .modal-body
     .row
         .col-md-12
-            p If you already have one, you can add it and manage it.
+            p If you already have an address, multi-signature or not you can add it and manage it.
 
         .form-horizontal
             .col-md-8.col-md-offset-2
                 .spacer-25
                 .form-group
                     .col-md-12
-                        input.form-control(type="text", name="multisigSecret", placeholder="Multi-signature secret" ng-model="multisigSecret")
+                        input.form-control(type="text", name="accountName", placeholder="Add a name for this account" ng-model="accountName")
             .col-md-12
-                p.small.text-center * Multi-signature account secret
+                p.small.text-center * Account name
+                hr
+            .col-md-8.col-md-offset-2
+                .spacer-25
+                .form-group
+                    .col-md-12
+                        input.form-control(type="text", name="accountSecret", placeholder="Add the secret in order to use it" ng-model="accountSecret")
+            .col-md-12
+                p.small.text-center * Account secret
                 hr
             .col-md-8.col-md-offset-2
                 .form-group
                     .col-md-12
-                        input.form-control(type="text", name="multisigAddress", placeholder="Multi-signature address" ng-model="multisigAddress")
+                        input.form-control(type="text", name="accountAddress", placeholder="Add the account address" ng-model="accountAddress")
             .col-md-12
-                p.small.text-center * Multi-signature address
+                p.small.text-center * Account address
 
 .modal-footer
-    button.btn.btn-primary
+    button.btn.btn-primary(ng-click="addWallet();")
                 | Add
     button.btn.btn-warning(ng-click="$close();")
         | Discard

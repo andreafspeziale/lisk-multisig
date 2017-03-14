@@ -250,6 +250,31 @@ router.post('/multisig', (req, res) => {
 })
 
 /**
+ * Add wallet API call
+ */
+router.post('/add', (req, res) => {
+	let config = JSON.parse(fs.readFileSync('data/config.json', 'utf8'));
+	if (config.node && !(req.body.name in config)) {
+		config[req.body.name] = {address:req.body.address,secret:req.body.secret};
+		fs.writeFile('data/config.json', JSON.stringify (config), (err,data) => {
+			if(!err) {
+				res.send({
+					"message":"Wallet added",
+					"redirect":"/main",
+					"type":"success"
+				})
+			} else {
+				res.send({
+					"message":"Something wrong saving the data",
+					"redirect":"/",
+					"type":"error"
+				})
+			}
+		});
+	}
+});
+
+/**
  * Sign tx API call
  */
 router.post('/sign', (req, res) => {
