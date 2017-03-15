@@ -10,14 +10,14 @@ configuration.config(['$routeProvider', '$locationProvider', ($routeProvider, $l
     }).otherwise({
         redirectTo: '/'
     });
-    $routeProvider.when('/node', {
-        templateUrl: '/public/config/views/config.html'
-    }).otherwise({
-        redirectTo: '/'
-    });
-    $routeProvider.when('/wallet', {
-        templateUrl: '/public/config/views/config.html'
-    }).otherwise({
-        redirectTo: '/'
-    });
+    // $routeProvider.when('/node', {
+    //     templateUrl: '/public/config/views/config.html'
+    // }).otherwise({
+    //     redirectTo: '/'
+    // });
+    // $routeProvider.when('/wallet', {
+    //     templateUrl: '/public/config/views/config.html'
+    // }).otherwise({
+    //     redirectTo: '/'
+    // });
 }])
