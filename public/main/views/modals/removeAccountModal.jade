@@ -1,0 +1,16 @@
+//
+   Created by andreafspeziale on 08/02/17.
+.modal-header
+    h3.modal-title.text-center
+        | Remove Account
+
+.modal-body
+    .row
+        .col-md-12
+            p Are you sure you want to delete this account?
+
+.modal-footer
+    button.btn.btn-primary(ng-click="removeAccount();")
+        | Remove
+    button.btn.btn-warning(ng-click="$close();")
+        | Discard

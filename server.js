@@ -441,22 +441,58 @@ router.get('/walletsandinfos', (req, res) => {
 	if(config.node){
 		let lisk = require ('liskapi')(config.node);
 		for(let account in config) {
-			console.log(account);
 			if(config[account].address) {
 				lisk.getAccount ( { address: config[account].address } )
 					.call ()
 					.then ((r) => {
 						// console.log (`Getting an account\n ${JSON.stringify (r)}`);
+						r.account.name = account;
 						accounts.push(r.account);
-						console.log(accounts);
+						if(accounts.length == (Object.keys(config).length)-1) {
+							res.send({
+								"message":"Got address infos",
+								"redirect":"/main",
+								"type":"success",
+								"data":accounts
+							})
+						}
 					})
 					.catch ((err) => {
 						console.log ('Got an error getting an account\n', err);
-
+						res.send({
+							"message":"Got an error getting an accounts, " + err,
+							"redirect":"/main",
+							"type":"error"
+						})
 					});
 			}
 		}
 	}
+})
+
+router.post('/removeaccount', (req, res) => {
+	console.log(req.body.accountName);
+	let config = JSON.parse(fs.readFileSync('data/config.json', 'utf8'));
+	if(req.body.accountName in config) {
+		delete config[req.body.accountName];
+		fs.writeFile('data/config.json', JSON.stringify (config), (err,data) => {
+			if(!err) {
+				res.send({
+					"message":"Wallet removed",
+					"redirect":"/main",
+					"type":"success"
+				})
+			} else {
+				res.send({
+					"message":"Something wrong removing the wallet",
+					"redirect":"/main",
+					"type":"error"
+				})
+			}
+		});
+	}
+
+
 })
 
 app.use ('/api', router);

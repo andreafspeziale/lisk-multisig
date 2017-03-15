@@ -1,8 +1,8 @@
 /**
  * Created by andreafspeziale on 03/02/17.
  */
-main.controller('MainController', ['$scope', '$http', '$location', '$rootScope', 'toastr', '$uibModal','usSpinnerService',
-    ($scope, $http, $location, $rootScope, toastr, $uibModal, usSpinnerService) => {
+main.controller('MainController', ['$scope', '$http', '$location', '$rootScope', 'toastr', '$uibModal','usSpinnerService', '$route',
+    ($scope, $http, $location, $rootScope, toastr, $uibModal, usSpinnerService, $route) => {
 
         $rootScope.waiting = false;
         $scope.keys = [''];
@@ -14,12 +14,41 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
         $scope.accountSecret = '';
         $scope.accountAddress = '';
         $scope.accountSecondSecret = '';
+        $scope.accountToRemove = '';
 
-        //
+
+        $scope.removeAccount = () => {
+            let param = {
+                accountName : $rootScope.accountToRemove
+            };
+            $http.post('/api/removeaccount', param)
+                .then((data) => {
+
+
+                    $scope.modalInstance.close();
+
+                    if(data.data.type == 'error')
+                        toastr.error(data.data.message, 'Error');
+                    else
+                        toastr.success(data.data.message, 'Success');
+
+                    $route.reload();
+
+
+                })
+                .catch((err) => {
+                    console.log('error');
+                    console.log(err);
+                    $scope.modalInstance.close();
+                    toastr.error(err.data.message, 'Error');
+                });
+        };
+
         $scope.getAllAccounts = () => {
+            console.log("get");
             $http.get ('/api/walletsandinfos')
                 .then ((d) => {
-
+                    $scope.accounts = d.data.data;
                 })
                 .catch((err) => {
                     console.log("Error ", err);
@@ -40,6 +69,7 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
                 };
                 $http.post('/api/transaction', data)
                     .then((data) => {
+                        $scope.getAllAccounts();
                         $scope.modalInstance.close();
                         if(data.data.type == 'error')
                             toastr.error(data.data.message, 'Error');
@@ -70,11 +100,14 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
                 };
                 $http.post('/api/add', data)
                     .then((data) => {
+                        $scope.getAllAccounts();
                         $scope.modalInstance.close();
                         if(data.data.type == 'error')
                             toastr.error(data.data.message, 'Error');
                         else
                             toastr.success(data.data.message, 'Success');
+
+                        $route.reload();
 
                     })
                     .catch((err) => {
@@ -101,7 +134,7 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
 
                 $http.post('/api/sign', params)
                      .then((data) => {
-
+                     $scope.getAllAccounts();
                      usSpinnerService.stop('spinner-1');
                      $rootScope.waiting = false;
 
@@ -150,6 +183,7 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
 
                 $http.post('/api/multisig', params)
                     .then((data) => {
+                        $scope.getAllAccounts();
 
                         usSpinnerService.stop('spinner-1')
                         $rootScope.waiting = false;
@@ -158,6 +192,8 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
                             toastr.error(data.data.message, 'Error');
                         else
                             toastr.success(data.data.message, 'Success');
+
+                        $route.reload();
 
                     })
                     .catch((err) => {
@@ -199,6 +235,17 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
                     console.log("Error ", err);
                 });
         };
+
+        $scope.removeAccountModal = (account) => {
+
+            $rootScope.accountToRemove = account;
+            $scope.modalInstance = $uibModal.open({
+                templateUrl: '/public/main/views/modals/removeAccountModal.html',
+                controller: 'MainController',
+                backdrop: 'static',
+                scope: $scope
+            })
+        }
 
         $scope.signMultisigTxModal = () => {
             console.log("signMultisigTxModal");
@@ -249,7 +296,8 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
             $scope.modalInstance = $uibModal.open({
                 templateUrl: '/public/main/views/modals/addAccountModal.html',
                 controller: 'MainController',
-                backdrop: 'static'
+                backdrop: 'static',
+                scope: $scope
             })
         }
 

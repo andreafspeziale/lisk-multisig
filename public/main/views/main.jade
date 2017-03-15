@@ -46,3 +46,18 @@ span(ng-controller="MainController")
             .col-md-8.col-md-offset-2
                 hr
         .spacer-25
+
+        .row.margin-bottom-50
+            .row.text-center(ng-repeat="account in accounts")
+                #wallets
+                    .col-md-3
+                        p
+                            i.fa.fa-university(aria-hidden="true")
+
+                    .col-md-3
+                        p {{ account.name }} ({{ account.address }})
+                    .col-md-3
+                        p {{ account.balance / 100000000 | number}} LSK
+                    .col-md-3
+                        p
+                            i.fa.fa-times.remove(aria-hidden="true", ng-click="removeAccountModal(account.name)")
