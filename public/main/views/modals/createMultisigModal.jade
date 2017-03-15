@@ -13,9 +13,19 @@
                 strong
                     |  Multi-signature
                 |  account.
-            p.small.text-center * your main account will be changed by 25 LSK.
+            p.small.text-center * one of your account will be changed by 25 LSK.
 
         .form-horizontal
+            .col-md-8.col-md-offset-2
+                .spacer-25
+                .form-group
+                    .col-md-12
+                        select.form-control(ng-model="wallet")
+                            option(ng-repeat="wallet in wallets", value="{{ wallet }}") {{ wallet }}
+
+            .col-md-12
+                p.small.text-center * select one of your accounts that will be charge of 25LSK for the blockchain operation
+                hr
             .col-md-8.col-md-offset-2
                 .spacer-25
                 .form-group
@@ -49,6 +59,7 @@
             .col-md-8.col-md-offset-2
                 .form-group
                     .col-md-10(ng-repeat="key in keys track by $index")
+
                         input.form-control.margin-bottom-10(type="text", name="ownerPKey", placeholder="Owner Public Key" ng-model="keys[$index]")
                     .col-md-2
                         button.btn.btn-default(ng-click="addPublicKey();")

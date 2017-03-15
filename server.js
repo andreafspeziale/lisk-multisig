@@ -26,13 +26,13 @@ router.post('/node', (req, res) => {
 	fs.writeFile('data/config.json', JSON.stringify (data), (err,data) => {
 		if(!err) {
 			res.send({
-				"message":"node configuration ok",
+				"message":"Node configuration ok",
 				"redirect":"/wallet",
 				"type":"success"
 			})
 		} else {
 			res.send({
-				"message":"something wrong saving the data",
+				"message":"Something wrong saving the data",
 				"redirect":"/",
 				"type":"error"
 			})
@@ -235,13 +235,13 @@ router.post('/multisig', (req, res) => {
 					console.log (`Post for opening an account\n ${JSON.stringify (r)}`);
 					let account = r.account.address;
 					let params = {
-						secret: config.wallet.secret,
-						amount: 3000000000,
+						secret: config[req.body.walletToBeCharged].secret,
+						amount: 2500000000,
 						recipientId: account,
-						publicKey: config.wallet.publickey
+						publicKey: config[req.body.walletToBeCharged].publicKey
 					};
-					if(config.wallet.secondSecret != "")
-						params.secondSecret = config.wallet.secondSecret;
+					if(config[req.body.walletToBeCharged].secondSecret != "")
+						params.secondSecret = config[req.body.walletToBeCharged].secondSecret;
 
 					// create the multisig-one
 					setTimeout(function () {

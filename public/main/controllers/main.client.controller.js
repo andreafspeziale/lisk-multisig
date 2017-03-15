@@ -109,7 +109,7 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
             console.log("createMultisig");
 
             // check fields filled
-            if( $scope.name == '' || $scope.txLifeTime <= 0 || $scope.keys.indexOf('') == 0 || $scope.minSig < 2 || $scope.minSig > $scope.keys.length) {
+            if( $scope.name == '' || $scope.txLifeTime <= 0 || $scope.keys.indexOf('') == 0 || $scope.minSig < 2 || $scope.minSig > $scope.keys.length || $scope.wallet == '') {
 
                 toastr.warning('Fill all the fields', 'Warning');
 
@@ -125,7 +125,8 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
                             "lifetime":$scope.txLifeTime,
                             "min":$scope.minSig,
                             "publicKeys":$scope.publicKeys
-                        }
+                        },
+                        "walletToBeCharged":$scope.wallet
                 };
 
                 $rootScope.waiting = true;
@@ -147,6 +148,9 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
                     .catch((err) => {
                         console.log('error')
                         console.log(err)
+                        usSpinnerService.stop('spinner-1')
+                        $rootScope.waiting = false;
+                        toastr.error(err, 'Error');
                     });
 
             }
@@ -156,15 +160,25 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
             $http.get ('/api/mnemonic')
                 .then ((data) => {
                     console.log("createMultisigModal");
-                    $scope.mnemonic = data.data.secret;
 
+                    $http.get ('/api/wallets')
+                        .then ((d) => {
+                            console.log("signTxModal");
 
-                    $scope.modalInstance = $uibModal.open({
-                        templateUrl: '/public/main/views/modals/createMultisigModal.html',
-                        controller: 'MainController',
-                        backdrop: 'static',
-                        scope: $scope
-                    })
+                            $scope.wallets = d.data.data;
+
+                            $scope.mnemonic = data.data.secret;
+
+                            $scope.modalInstance = $uibModal.open({
+                                templateUrl: '/public/main/views/modals/createMultisigModal.html',
+                                controller: 'MainController',
+                                backdrop: 'static',
+                                scope: $scope
+                            })
+                        })
+                        .catch((err) => {
+                            console.log("Error ", err);
+                        });
                 })
                 .catch((err) => {
                     console.log("Error ", err);
@@ -224,6 +238,7 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
             })
         }
 
+        //ToDo make impossible to add a new row without filling the first one
         $scope.addPublicKey = () => {
             $scope.keys.push('');
         }
