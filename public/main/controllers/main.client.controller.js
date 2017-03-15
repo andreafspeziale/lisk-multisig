@@ -37,6 +37,8 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
                     .catch((err) => {
                         console.log('error');
                         console.log(err);
+                        $scope.modalInstance.close();
+                        toastr.error(err.data.message, 'Error');
                     });
             }
 

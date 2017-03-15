@@ -106,7 +106,7 @@ router.post('/transaction', (req, res) => {
 		let params = {
 			secret:config[req.body.wallet].secret,
 			amount:(req.body.amount*100000000) ,
-			recipient:req.body.recipient,
+			recipientId:req.body.recipient,
 			publicKey:config[req.body.wallet].publicKey,
 		};
 
