@@ -187,7 +187,7 @@ router.get('/config', (req, res) => {
 		if(config.node) {
 			// node filled
 			// wallet is filled?
-			if(config.wallet) {
+			if(Object.keys(config).length > 1) {
 				// wallet filled
 				res.send({
 					"message":"node and wallet have been configured",
