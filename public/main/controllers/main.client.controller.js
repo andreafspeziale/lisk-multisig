@@ -15,6 +15,19 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
         $scope.accountAddress = '';
         $scope.accountSecondSecret = '';
 
+        //
+        $scope.getAllAccounts = () => {
+            $http.get ('/api/walletsandinfos')
+                .then ((d) => {
+
+                })
+                .catch((err) => {
+                    console.log("Error ", err);
+                });
+        }
+
+        $scope.getAllAccounts();
+
         $scope.makeTX = () => {
             console.log("makeTX");
             if($scope.wallet == "" || $scope.txAmount == "" || $scope.txAmount < 1 || $scope.txRecipient == "")

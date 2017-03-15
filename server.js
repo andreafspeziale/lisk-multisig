@@ -57,7 +57,11 @@ router.post('/wallet', (req, res) => {
 			.call ()
 			.then ((r) => {
 				console.log (`Getting an account\n ${JSON.stringify (r)}`);
-				config[req.body.name] = req.body;
+				config[req.body.name] = {
+					address:req.body.address,
+					secret:req.body.secret,
+					secondSecret:req.body.secondSecret
+				};
 				config[req.body.name].publicKey = r.account.publicKey;
 				fs.writeFile('data/config.json', JSON.stringify (config), (err,data) => {
 					if(!err) {
@@ -263,6 +267,8 @@ router.post('/multisig', (req, res) => {
 
 											// if everything is ok save the wallet data
 											config[req.body.name] = req.body.wallet;
+											config[req.body.name].address = account;
+											config[req.body.name].publicKey = r.account.publicKey;
 											fs.writeFile('data/config.json', JSON.stringify (config), (err,data) => {
 												if(!err) {
 													res.send({
@@ -424,6 +430,33 @@ router.get('/mnemonic', (req, res) => {
 		"secret":new Mnemonic(Mnemonic.Words.ENGLISH).toString(),
 	})
 
+})
+
+/**
+ * Get infos for all wallets added
+ */
+router.get('/walletsandinfos', (req, res) => {
+	let config = JSON.parse(fs.readFileSync('data/config.json', 'utf8'));
+	let accounts = [];
+	if(config.node){
+		let lisk = require ('liskapi')(config.node);
+		for(let account in config) {
+			console.log(account);
+			if(config[account].address) {
+				lisk.getAccount ( { address: config[account].address } )
+					.call ()
+					.then ((r) => {
+						// console.log (`Getting an account\n ${JSON.stringify (r)}`);
+						accounts.push(r.account);
+						console.log(accounts);
+					})
+					.catch ((err) => {
+						console.log ('Got an error getting an account\n', err);
+
+					});
+			}
+		}
+	}
 })
 
 app.use ('/api', router);
