@@ -5,6 +5,9 @@ span(ng-controller="WalletController")
         .form-horizontal.col-md-6.col-md-offset-3
             .form-group
                 .col-md-12
+                    input.form-control(type="text", name="name", placeholder="Give it a name" ng-model="name")
+            .form-group
+                .col-md-12
                     input.form-control(type="text", name="address", placeholder="Your main address" ng-model="yourAddress")
             .form-group
                 .col-md-12
@@ -12,9 +15,6 @@ span(ng-controller="WalletController")
             .form-group
                 .col-md-12
                     input.form-control(type="text", name="secondSecret", placeholder="Your main address second secret (optional)" ng-model="yourSecondSecret")
-            .form-group
-                .col-md-12
-                    input.form-control(type="text", name="publicKey", placeholder="Your main address public key" ng-model="yourPublicKey")
             .form-group
                 .col-sm-offset-2.col-sm-10
                     button.btn.custom-button.pull-right(type="text", ng-click="saveWallet();")

@@ -22,6 +22,10 @@ node.controller('NodeController', ['$scope', '$http', '$location', '$rootScope',
 
                 $http.post('/api/node', params)
                     .then((data) => {
+                        if(data.data.type == 'error')
+                            toastr.error(data.data.message, 'Error');
+                        else
+                            toastr.success(data.data.message, 'Success');
                         $location.path(data.data.redirect);
                     })
                     .catch((err) => {

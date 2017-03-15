@@ -27,6 +27,14 @@
                 p.small.text-center * account secret
                 hr
             .col-md-8.col-md-offset-2
+                .spacer-25
+                .form-group
+                    .col-md-12
+                        input.form-control(type="text", name="accountSecondSecret", placeholder="Add the second secret" ng-model="accountSecondSecret")
+            .col-md-12
+                p.small.text-center * account second secret (optional)
+                hr
+            .col-md-8.col-md-offset-2
                 .form-group
                     .col-md-12
                         input.form-control(type="text", name="accountAddress", placeholder="Add the account address" ng-model="accountAddress")

@@ -4,19 +4,19 @@
 wallet.controller('WalletController', ['$scope', '$http', '$location', '$rootScope', 'toastr',
     ($scope, $http, $location, $rootScope, toastr) => {
 
-        $scope.yourPublicKey = '';
+        $scope.name = '';
         $scope.yourAddress = '';
         $scope.yourSecret = '';
         $scope.yourSecondSecret = '';
 
         $scope.saveWallet = () => {
-            if( !($scope.yourAddress == '' || $scope.yourSecret == '' )) {
+            if( !($scope.yourAddress == '' && $scope.yourSecret == '' && $scope.name == '')) {
 
                 let wallet = {
                     "address":$scope.yourAddress,
                     "secret":$scope.yourSecret,
                     "secondSecret":$scope.yourSecondSecret,
-                    "publickey":$scope.yourPublicKey
+                    "name":$scope.name
                 };
 
                 // valid values
@@ -24,6 +24,10 @@ wallet.controller('WalletController', ['$scope', '$http', '$location', '$rootSco
                 $http.post('/api/wallet', wallet)
                     .then((data) => {
                         console.log("Configuration completed go to main functions");
+                        if(data.data.type == 'error')
+                            toastr.error(data.data.message, 'Error');
+                        else
+                            toastr.success(data.data.message, 'Success');
                         $location.path(data.data.redirect);
                     })
                     .catch((err) => {

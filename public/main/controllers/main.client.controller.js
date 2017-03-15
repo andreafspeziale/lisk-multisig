@@ -13,6 +13,34 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
         $scope.accountName = '';
         $scope.accountSecret = '';
         $scope.accountAddress = '';
+        $scope.accountSecondSecret = '';
+
+        $scope.makeTX = () => {
+            console.log("makeTX");
+            if($scope.wallet == "" || $scope.txAmount == "" || $scope.txAmount < 1 || $scope.txRecipient == "")
+                toastr.warning('Fill all the fields', 'Warning');
+            else {
+                let data = {
+                    wallet:$scope.wallet,
+                    recipient:$scope.txRecipient,
+                    amount:$scope.txAmount
+                };
+                $http.post('/api/transaction', data)
+                    .then((data) => {
+                        $scope.modalInstance.close();
+                        if(data.data.type == 'error')
+                            toastr.error(data.data.message, 'Error');
+                        else
+                            toastr.success(data.data.message, 'Success');
+
+                    })
+                    .catch((err) => {
+                        console.log('error');
+                        console.log(err);
+                    });
+            }
+
+        }
 
         $scope.addWallet = () => {
             console.log("addWallet")
@@ -22,7 +50,8 @@ main.controller('MainController', ['$scope', '$http', '$location', '$rootScope',
                 let data = {
                     name:$scope.accountName,
                     address:$scope.accountAddress,
-                    secret:$scope.accountSecret
+                    secret:$scope.accountSecret,
+                    second:$scope.accountSecondSecret
                 };
                 $http.post('/api/add', data)
                     .then((data) => {

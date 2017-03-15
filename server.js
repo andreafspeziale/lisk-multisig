@@ -27,12 +27,14 @@ router.post('/node', (req, res) => {
 		if(!err) {
 			res.send({
 				"message":"node configuration ok",
-				"redirect":"/wallet"
+				"redirect":"/wallet",
+				"type":"success"
 			})
 		} else {
 			res.send({
 				"message":"something wrong saving the data",
-				"redirect":"/"
+				"redirect":"/",
+				"type":"error"
 			})
 		}
 	});
@@ -46,26 +48,98 @@ router.post('/wallet', (req, res) => {
 
 	console.log('/config POST');
 
-	try {
+	// try {
 		let config = JSON.parse (fs.readFileSync('data/config.json', 'utf8'));
-		config["wallet"] = req.body;
-		fs.writeFile('data/config.json', JSON.stringify (config), (err,data) => {
-			if(!err) {
+
+		let lisk = require ('liskapi')(config.node);
+
+		lisk.getAccount ( { address: req.body.address } )
+			.call ()
+			.then ((r) => {
+				console.log (`Getting an account\n ${JSON.stringify (r)}`);
+				config[req.body.name] = req.body;
+				config[req.body.name].publicKey = r.account.publicKey;
+				fs.writeFile('data/config.json', JSON.stringify (config), (err,data) => {
+					if(!err) {
+						res.send({
+							"message":"Wallet configuration ok",
+							"redirect":"/main",
+							"type":"success"
+						})
+					} else {
+						res.send({
+							"message":"Something wrong saving the data",
+							"redirect":"/",
+							"type":"error"
+						})
+					}
+				});
+			})
+			.catch ((err) => {
+				console.log ('Got an error getting an account\n', err);
 				res.send({
-					"message":"wallet configuration ok",
-					"redirect":"/main"
+					"message":"Got an error getting the account, " + err,
+					"redirect":"/",
+					"type":"error"
 				})
-			} else {
-				res.send({
-					"message":"something wrong saving the data",
-					"redirect":"/"
-				})
-			}
-		});
-	} catch (err) {
+			});
+
+	// } catch (err) {
 		// error loading
 		// toDo return redirect to /
+	// }
+});
+
+/**
+ * Make tx with given wallet
+ */
+router.post('/transaction', (req, res) => {
+
+	console.log('/transaction POST');
+
+	// try {
+	let config = JSON.parse (fs.readFileSync('data/config.json', 'utf8'));
+	if(config.node && req.body.wallet in config) {
+		// console.log(req.body);
+		let lisk = require ('liskapi')(config.node);
+
+		let params = {
+			secret:config[req.body.wallet].secret,
+			amount:(req.body.amount*100000000) ,
+			recipient:req.body.recipient,
+			publicKey:config[req.body.wallet].publickey,
+		};
+
+		if(config[req.body.wallet].secondSecret != "")
+			params.secondSecret = config[req.body.wallet].secondSecret;
+
+		console.log(params);
+
+		lisk.sendTransaction ()
+			.data ( params )
+			.call ()
+			.then ((r) => {
+				console.log (`Put for sending LSK\n ${JSON.stringify (r)}`);
+				res.send({
+					"message":"Transaction success",
+					"redirect":"/main",
+					"type":"success"
+				})
+			})
+			.catch ((err) => {
+				console.log ('Got an error sending LSK\n', err);
+				res.send({
+					"message":"Transaction error, " + err,
+					"redirect":"/main",
+					"type":"error"
+				})
+			});
 	}
+
+	// } catch (err) {
+		// error loading
+		// toDo return redirect to /
+	// }
 });
 
 
@@ -255,22 +329,38 @@ router.post('/multisig', (req, res) => {
 router.post('/add', (req, res) => {
 	let config = JSON.parse(fs.readFileSync('data/config.json', 'utf8'));
 	if (config.node && !(req.body.name in config)) {
-		config[req.body.name] = {address:req.body.address,secret:req.body.secret};
-		fs.writeFile('data/config.json', JSON.stringify (config), (err,data) => {
-			if(!err) {
+
+		let lisk = require ('liskapi')(config.node);
+
+		lisk.getAccount ( { address: req.body.address } )
+			.call ()
+			.then ((r) => {
+				console.log (`Getting an account\n ${JSON.stringify (r)}`);
+				config[req.body.name] = {address:req.body.address,secret:req.body.secret,secondSecret:req.body.second,publicKey:r.account.publicKey};
+				fs.writeFile('data/config.json', JSON.stringify (config), (err,data) => {
+					if(!err) {
+						res.send({
+							"message":"Wallet added",
+							"redirect":"/main",
+							"type":"success"
+						})
+					} else {
+						res.send({
+							"message":"Something wrong saving the data",
+							"redirect":"/",
+							"type":"error"
+						})
+					}
+				});
+			})
+			.catch ((err) => {
+				console.log ('Got an error getting the account\n', err);
 				res.send({
-					"message":"Wallet added",
+					"message":"Got an error getting the account, " + err,
 					"redirect":"/main",
-					"type":"success"
-				})
-			} else {
-				res.send({
-					"message":"Something wrong saving the data",
-					"redirect":"/",
 					"type":"error"
 				})
-			}
-		});
+			});
 	}
 });
 

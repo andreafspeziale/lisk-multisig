@@ -22,7 +22,7 @@
             .col-md-8.col-md-offset-2
                 .form-group
                     .col-md-12
-                        input.form-control(type="text", name="txAmount", placeholder="e.g 20" ng-model="txAmount")
+                        input.form-control(type="number", name="txAmount", placeholder="e.g 20" ng-model="txAmount")
             .col-md-12
                 p.small.text-center * amount of the transaction
                 hr
@@ -32,25 +32,9 @@
                         input.form-control(type="text", name="txRecipient", placeholder="Recipient address" ng-model="txRecipient")
             .col-md-12
                 p.small.text-center * recipient of the transaction
-                hr
-            //
-                strong
-                    |  Multi-signature
-                |  account.
-            //
-                p.small.text-center * you are going to sign it with your main account setted up in the wizard.
-    //
-        .form-horizontal
-            .col-md-8.col-md-offset-2
-                .spacer-25
-                .form-group
-                    .col-md-12
-                        input.form-control(type="text", name="transactionID", placeholder="Transaction ID" ng-model="transactionID")
-            .col-md-12
-                p.small.text-center * you must know the transaction ID to be signed.
 
 .modal-footer
-    button.btn.btn-primary
+    button.btn.btn-primary(ng-click="makeTX();")
         | Make TX
     button.btn.btn-warning(ng-click="$close();")
         | Discard
