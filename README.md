@@ -14,6 +14,28 @@ Once the set-up is completed you will be redirected to a main page with all the 
 
 Enjoy!
 
+#Use it!
+###Req
+
+    nodeJs / npm
+    bower
+    grunt
+    
+###Install
+
+    $ bower install
+    $ npm install
+    $ grunt build
+    
+###Run
+
+    $ node server.js
+    
+###Use
+Visit localhost:8082 and start setting a Lisk node to use it as gateway to the Lisk blockchain
+
+![](http://imgur.com/a/UHFXq)
+
 #Developing
 ###DevReq
 
