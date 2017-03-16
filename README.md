@@ -34,7 +34,7 @@ Enjoy!
 ###Use
 Visit localhost:8082 and start setting a Lisk node to use it as gateway to the Lisk blockchain
 
-![](http://imgur.com/a/UHFXq)
+![first wizard step](http://i66.tinypic.com/264iddk.jpg)
 
 #Developing
 ###DevReq
