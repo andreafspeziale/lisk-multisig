@@ -34,15 +34,7 @@ Enjoy!
 ###Use
 Visit localhost:8082 and start setting a Lisk node to use it as gateway to the Lisk blockchain
 
-![first wizard step](http://i66.tinypic.com/264iddk.jpg)
 
-Now add at least one valid account to the application
-
-![second wizard step](http://i65.tinypic.com/2j2u4wo.png)
-
-Ok! Now you can access to all the functionalities!
-
-![third wizard step](http://i64.tinypic.com/b6se1u.png)
 
 #Developing
 ###DevReq
