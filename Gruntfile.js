@@ -74,4 +74,5 @@ module.exports = function(grunt){
         },
     })
     grunt.registerTask('default', ['wiredep', 'stylus', 'jade',  'concat', 'watch']);
+    grunt.registerTask('build', ['wiredep', 'stylus', 'jade',  'concat']);
 }
